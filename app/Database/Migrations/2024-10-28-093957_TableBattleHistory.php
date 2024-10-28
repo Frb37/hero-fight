@@ -11,25 +11,28 @@ class TableBattleHistory extends Migration
         $this->forge->addField([
             'user_id' => [
                 'type' => 'INT',
-                'constraint' => 11,
                 'unsigned' => true,
             ],
             'character_id' => [
                 'type' => 'INT',
-                'constraint' => 11,
                 'unsigned' => true,
             ],
             'action' => [
                 'type' => 'VARCHAR',
+                'constraint' => '255',
+                'null' => false,
             ],
             'result' => [
                 'type' => 'VARCHAR',
+                'constraint' => '255',
+                'null' => false,
             ],
             'timestamp' => [
                 'type' => 'DATETIME',
-            ]
+                'null' => true,
+            ],
         ]);
-        $this->forge->addForeignKey('user_id', 'users', 'id');
+        $this->forge->addForeignKey('user_id', 'user', 'id');
         $this->forge->addForeignKey('character_id', 'characters', 'id');
         $this->forge->createTable('battle_history');
     }

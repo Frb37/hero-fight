@@ -9,10 +9,15 @@ class TableCharacters extends Migration
     public function up()
     {
         $this->forge->addField([
+            'id' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => true,
+                'auto_increment' => true,
+            ],
             'user_id' => [
                 'type' => 'INT',
                 'unsigned' => true,
-                'auto_increment' => true,
             ],
             'name' => [
                 'type' => 'VARCHAR',
@@ -45,8 +50,8 @@ class TableCharacters extends Migration
                 'null' => true,
             ],
         ]);
+        $this->forge->addPrimaryKey('id');
         $this->forge->addForeignKey('user_id', 'user', 'id');
-        $this->forge->addUniqueKey(['user_id', 'name']);
         $this->forge->createTable('characters');
     }
 
