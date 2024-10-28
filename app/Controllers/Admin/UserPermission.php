@@ -20,6 +20,32 @@ class UserPermission extends BaseController
             return $this->view('/admin/user/user-permission', ["permission" => $permission], true);
         }
     }
+
+    public function postupdate() {
+        $data = $this->request->getPost();
+        $upm = Model("/UserPermissionModel");
+        if ($upm->updatePermission($data['id'], $data)) {
+            $this->success("The permission was successfully updated");
+        } else {
+            $this->error("An error occurred. The permission could not be updated");
+        }
+        $this->redirect("/admin/userpermission");
+    }
+
+    public function postcreate() {
+        $data = $this->request->getPost();
+        $upm = Model("UserPermissionModel");
+        if ($upm->createPermission($data)) {
+            $this->success("New permission was successfully created");
+            $this->redirect("/admin/userpermission");
+        } else {
+            $errors = $upm->errors();
+            foreach ($errors as $error) {
+                $this->error($error);
+            }
+            $this->redirect("/admin/userpermission/new");
+        }
+    }
     public function postSearchPermission()
     {
         $UserModel = model('App\Models\UserPermissionModel');

@@ -30,6 +30,116 @@ class User extends BaseController
         }
     }
 
+    public function postupdate() {
+        // Récupération des données envoyées via POST
+        $data = $this->request->getPost();
+        // Récupération du modèle UserModel
+        $um = Model("UserModel");
+
+        // Vérifier si un fichier a été soumis dans le formulaire
+        $file = $this->request->getFile('profile_image'); // 'profile_image' est le nom du champ dans le formulaire
+        // Si un fichier a été soumis
+        if ($file && $file->getError() !== UPLOAD_ERR_NO_FILE) {
+            // Récupération du modèle MediaModel
+            $mm = Model('MediaModel');
+            // Récupérer l'ancien média avant l'upload
+            $old_media = $mm->getMediaByEntityIdAndType($data['id'], 'user');
+
+            // Préparer les données du média pour le nouvel upload
+            $mediaData = [
+                'entity_type' => 'user',
+                'entity_id'   => $data['id'],   // Utiliser l'ID de l'utilisateur
+            ];
+
+            // Utiliser la fonction upload_file() pour gérer l'upload et enregistrer les données du média
+            $uploadResult = upload_file($file, 'avatar', $data['username'], $mediaData, true, ['image/jpeg', 'image/png','image/jpg']);
+
+            // Vérifier le résultat de l'upload
+            if (is_array($uploadResult) && $uploadResult['status'] === 'error') {
+                // Afficher un message d'erreur détaillé et rediriger
+                $this->error("An error occurred while uploading the image: " . $uploadResult['message']);
+                return $this->redirect("/admin/user");
+            }
+
+            // Si l'upload est un succès, suppression de l'ancien média
+            if ($old_media) {
+                $mm->deleteMedia($old_media[0]['id']);
+            }
+        }
+
+        // Mise à jour des informations utilisateur dans la base de données
+        if ($um->updateUser($data['id'], $data)) {
+            // Si la mise à jour réussit
+            $this->success("User was successfully updated.");
+        } else {
+            $errors = $um->errors();
+            foreach ($errors as $error) {
+                $this->error($error);
+            }
+        }
+        // Redirection vers la page des utilisateurs après le traitement
+        return $this->redirect("/admin/user");
+    }
+
+    public function postcreate() {
+        $data = $this->request->getPost();
+        $um = Model("UserModel");
+
+        // Créer l'utilisateur et obtenir son ID
+        $newUserId = $um->createUser($data);
+
+        // Vérifier si la création a réussi
+        if ($newUserId) {
+            // Vérifier si des fichiers ont été soumis dans le formulaire
+            $file = $this->request->getFile('profile_image'); // 'profile_image' est le nom du champ dans le formulaire
+            if ($file && $file->getError() !== UPLOAD_ERR_NO_FILE) {
+                // Préparer les données du média
+                $mediaData = [
+                    'entity_type' => 'user',
+                    'entity_id'   => $newUserId,   // Utiliser le nouvel ID de l'utilisateur
+                ];
+
+                // Utiliser la fonction upload_file() pour gérer l'upload et les données du média
+                $uploadResult = upload_file($file, 'avatar', $data['username'], $mediaData);
+
+                // Vérifier le résultat de l'upload
+                if (is_array($uploadResult) && $uploadResult['status'] === 'error') {
+                    // Afficher un message d'erreur détaillé et rediriger
+                    $this->error("An error occurred while uploading the image : " . $uploadResult['message']);
+                    return $this->redirect("/admin/user/new");
+                }
+            }
+            $this->success("User was successfully created.");
+            $this->redirect("/admin/user");
+        } else {
+            $errors = $um->errors();
+            foreach ($errors as $error) {
+                $this->error($error);
+            }
+            $this->redirect("/admin/user/new");
+        }
+    }
+
+    public function getdeactivate($id){
+        $um = Model('UserModel');
+        if ($um->deleteUser($id)) {
+            $this->success("User was deactivated.");
+        } else {
+            $this->error("An error occurred. User could not be deactivated.");
+        }
+        $this->redirect('/admin/user');
+    }
+
+    public function getactivate($id){
+        $um = Model('UserModel');
+        if ($um->activateUser($id)) {
+            $this->success("User successfully (re)activated.");
+        } else {
+            $this->error("User could not be successfully (re)activated.");
+        }
+        $this->redirect('/admin/user');
+    }
+
     public function postSearchUser()
     {
         $UserModel = model('App\Models\UserModel');
