@@ -10,8 +10,7 @@ class UserPermission extends BaseController
     protected $requiredPermissions = ['administrateur'];
     public function getindex($id = null) {
         if ($id == null) {
-            $all_perms = Model('UserPermissionModel')->getAllPermissions();
-            return $this->view('/admin/user/index-permission', ["all_perms" => $all_perms], true);
+            return $this->view('/admin/user/index-permission', [], true);
         } else {
             $upm = Model("/UserPermissionModel");
             if ($id == "new") {
