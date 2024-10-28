@@ -9,6 +9,12 @@ class TableBattleHistory extends Migration
     public function up()
     {
         $this->forge->addField([
+            'id' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => true,
+                'auto_increment' => true,
+            ],
             'user_id' => [
                 'type' => 'INT',
                 'unsigned' => true,
@@ -32,6 +38,7 @@ class TableBattleHistory extends Migration
                 'null' => true,
             ],
         ]);
+        $this->forge->addPrimaryKey('id');
         $this->forge->addForeignKey('user_id', 'user', 'id');
         $this->forge->addForeignKey('character_id', 'characters', 'id');
         $this->forge->createTable('battle_history');
