@@ -19,6 +19,6 @@ class Home extends BaseController
 
     public function getforbidden() : string
     {
-        return view('/templates/forbidden');
+        return $this->view('/templates/forbidden');
     }
 }
