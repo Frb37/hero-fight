@@ -1,42 +1,57 @@
 {
-  "accueil": {
-    "title": "Accueil",
+  "home": {
+    "title": "Home",
     "url": "/",
     "perm": "none",
     "icon": "<i class=\"nav-icon fa-solid fa-house\"></i>",
-    "class": "main-menu-accueil"
+    "class": "main-menu-home"
   },
-  "produits": {
-    "title": "Produits",
-    "url": "/Product",
+  "game": {
+    "title": "Your Game",
+    "url": "/game",
     "perm": "none",
-    "icon": "<i class=\"nav-icon fas fa-file-invoice-dollar\"></i>",
-    "class": "",
+    "icon": "<i class=\"nav-icon fas fa-gamepad\"></i>",
     "subs": {
-      "search": {
-        "title": "Rechercher un produit",
-        "url": "/Product/search",
-        "icon": "<i class=\"nav-icon fas fa-magnifying-glass\"></i>"
+      "characters": {
+        "title": "Characters",
+        "url": "/characters",
+        "perm": "none",
+        "icon": "<i class=\"nav-icon fas fa-user-ninja\"></i>",
+        "class": ""
       },
-      "newproduct": {
-        "title": "Nouveau Produit",
-        "url": "/Product/new",
-        "icon": "<i class=\"nav-icon fas fa-file-circle-plus\"></i>"
+      "battles": {
+        "title": "Battles",
+        "url": "/battles",
+        "perm": "none",
+        "icon": "<i class=\"nav-icon fas fa-hand-fist\"></i>",
+        "class": ""
       },
-      "imports": {
-        "title": "Import en masse",
-        "url": "/Imports/",
-        "icon": "<i class=\"nav-icon fas fa-download\"></i>"
+      "battle_history": {
+        "title": "Battle history",
+        "url": "/battlehistory",
+        "perm": "none",
+        "icon": "<i class=\"nav-icon fas fa-hourglass-half\"></i>",
+        "class": ""
+      }
+    }
+  },
+  "users": {
+    "title": "Users",
+    "url": "/user",
+    "perm": "none",
+    "icon": "<i class=\"nav-icon fas fa-user\"></i>",
+    "subs": {
+      "userlist": {
+        "title": "User List",
+        "url": "/user",
+        "perm": "none",
+        "icon": "<i class=\"nav-icon fas fa-table-list\"></i>"
       },
-      "export": {
-        "title": "Export",
-        "url": "/Product/export",
-        "icon": "<i class=\"nav-icon fas fa-upload\"></i>"
-      },
-      "prices": {
-        "title": "Tarifs Pro",
-        "url": "/Prices/",
-        "icon": "<i class=\"nav-icon fas fa-euro\"></i>"
+      "userpermission": {
+        "title": "User Permissions",
+        "url": "/userpermission",
+        "perm": "none",
+        "icon": "<i class=\"nav-icon fas fa-user-tie \"></i>"
       }
     }
   }
