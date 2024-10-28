@@ -29,4 +29,38 @@ class User extends BaseController
             }
         }
     }
+
+    public function postSearchUser()
+    {
+        $UserModel = model('App\Models\UserModel');
+
+        // Paramètres de pagination et de recherche envoyés par DataTables
+        $draw        = $this->request->getPost('draw');
+        $start       = $this->request->getPost('start');
+        $length      = $this->request->getPost('length');
+        $searchValue = $this->request->getPost('search')['value'];
+
+        // Obtenez les informations sur le tri envoyées par DataTables
+        $orderColumnIndex = $this->request->getPost('order')[0]['column'] ?? 0;
+        $orderDirection = $this->request->getPost('order')[0]['dir'] ?? 'asc';
+        $orderColumnName = $this->request->getPost('columns')[$orderColumnIndex]['data'] ?? 'id';
+
+
+        // Obtenez les données triées et filtrées
+        $data = $UserModel->getPaginatedUser($start, $length, $searchValue, $orderColumnName, $orderDirection);
+
+        // Obtenez le nombre total de lignes sans filtre
+        $totalRecords = $UserModel->getTotalUser();
+
+        // Obtenez le nombre total de lignes filtrées pour la recherche
+        $filteredRecords = $UserModel->getFilteredUser($searchValue);
+
+        $result = [
+            'draw'            => $draw,
+            'recordsTotal'    => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data'            => $data,
+        ];
+        return $this->response->setJSON($result);
+    }
 }

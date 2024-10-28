@@ -43,13 +43,13 @@
     "subs": {
       "userlist": {
         "title": "User List",
-        "url": "/user",
+        "url": "/admin/user",
         "perm": "none",
         "icon": "<i class=\"nav-icon fas fa-table-list\"></i>"
       },
       "userpermission": {
         "title": "User Permissions",
-        "url": "/userpermission",
+        "url": "/admin/userpermission",
         "perm": "none",
         "icon": "<i class=\"nav-icon fas fa-user-tie \"></i>"
       }
