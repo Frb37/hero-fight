@@ -7,7 +7,7 @@
             <img src="<?= base_url('/assets/brand/logo-blanc.svg'); ?>" class="sidebar-brand-narrow" _width="32"
                  height="32"
                  alt="Mon Projet" />
-            Mon Projet
+            Hero Fight Project
         </div>
         <button class="btn-close d-lg-none" type="button" data-coreui-dismiss="offcanvas" data-coreui-theme="dark" aria-label="Close" onclick="coreui.Sidebar.getInstance(document.querySelector(&quot;#sidebar&quot;)).toggle()"></button>
     </div>
@@ -19,7 +19,7 @@
             if (!isset($menu['subs'])) { ?>
                 <li class="nav-item <?= ($localmenu === $km ? 'active' : '') ?>"
                     id="menu_<?= $km ?>">
-                    <a class="nav-link" href="<?= base_url($menu['url']) ?>">
+                    <a class="nav-link" href="<?= base_url($menu['url']); ?>">
                         <?php if (isset($menu['icon'])) { echo $menu['icon']; }
                         else { ?><svg class="nav-icon"><span class="bullet bullet-dot"></svg><?php } ?>
                         <?= $menu['title'] ?>
@@ -48,7 +48,7 @@
             <a class="nav-link" href="<?= base_url('/login/logout'); ?>">
                 <svg class="nav-icon me-2">
                     <use xlink:href="/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
-                </svg> Déconnexion</a>
+                </svg> Log out </a>
         </li>
     </ul>
     <div class="sidebar-footer border-top d-none d-md-flex">

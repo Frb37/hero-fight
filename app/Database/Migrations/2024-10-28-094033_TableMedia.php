@@ -25,7 +25,7 @@ class TableMedia extends Migration
             ],
             'entity_type' => [
                 'type' => 'ENUM',
-                'constraint' => ['user', 'item','brand','license'],
+                'constraint' => ['user', 'character'],
                 'default' => 'user',
             ],
             'created_at' => [
