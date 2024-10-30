@@ -44,6 +44,14 @@ class BattlesModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    public function getBattlesWithCharNames() {
+        $this->select("c1.name, c2.name, w.name, l.name")
+            ->join("characters c1", "c1.id = battles.character1_id")
+            ->join("characters c2", "c2.id = battles.character2_id")
+            ->join("characters w", "w.id = battles.winner_id")
+            ->join("characters l", "l.id = battles.loser_id")
+            ->find();
+    }
     public function getBattleByFirstId($id) {
         $this->select("*")
             ->where("character1_id", $id1)
