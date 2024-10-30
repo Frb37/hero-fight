@@ -59,7 +59,7 @@ class CharacterModel extends Model
     }
 
     public function getAllCharacters() {
-        return $this->select("characters.id AS char_id, user.id AS user_id, user.username, characters.name, characters.strength, characters.constitution, characters.agility, characters.experience, characters.level")
+        return $this->select('characters.id AS id, user.username AS username, characters.name, characters.strength, characters.constitution, characters.agility, characters.experience, characters.level')
             ->join("user", "user.id = characters.user_id")
             ->find();
     }
@@ -112,7 +112,7 @@ class CharacterModel extends Model
     {
         $builder = $this->builder();
         $builder->join('user ', 'user.id = characters.user_id');
-        $builder->select('characters.id, user.username, characters.name, characters.strength, characters.constitution, characters.agility, characters.experience, characters.level');
+        $builder->select('characters.id AS id, user.username AS username, characters.name, characters.strength, characters.constitution, characters.agility, characters.experience, characters.level');
 
         // @phpstan-ignore-next-line
         if ($searchValue != null) {

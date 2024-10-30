@@ -7,20 +7,17 @@
     <div class="col">
         <div class="card mt-4">
             <div class="card-header">
-                <h2> Voici la liste des personnages disponibles </h2>
+                <h2> Voici la liste des combats déjà menés </h2>
             </div>
             <div class="card-body">
-                <table id="tableCharacters" class="table table-hover">
+                <table id="tableBattles" class="table table-hover">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Name</th>
-                        <th>Strength</th>
-                        <th>Constitution</th>
-                        <th>Agility</th>
-                        <th>Experience</th>
-                        <th>Level</th>
+                        <th>1er opposant</th>
+                        <th>2e opposant</th>
+                        <th>Gagnant</th>
+                        <th>Perdant</th>
+                        <th>Date</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -58,16 +55,14 @@
                 }
             },
             "columns": [
-                {"data": "id"},
-                {"data": "username"},
-                {"data": "name"},
-                {"data": "strength"},
-                {"data": "constitution"},
-                {"data": "agility"},
-                {"data": "experience"},
-                {"data": "level"}
+                {"data": "character1_name"},
+                {"data": "character2_name"},
+                {"data": "winner_name"},
+                {"data": "loser_name"},
+                {"data": "date"},
             ]
         });
     });
 
 </script>
+

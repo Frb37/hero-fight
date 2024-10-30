@@ -44,6 +44,20 @@ class BattlesModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    public function getBattleByFirstId($id) {
+        $this->select("*")
+            ->where("character1_id", $id1)
+            ->find();
+    }
+    public function getBattleByParticipants($id1, $id2) {
+        $this->select("*")
+            ->where("character1_id", $id1)
+            ->where("character2_id", $id2)
+            ->find();
+    }
+    public function getAllBattles() {
+        $this->findAll();
+    }
     public function insertBattle($data) {
         $this->insert($data);
     }
