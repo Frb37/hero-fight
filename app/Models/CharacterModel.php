@@ -45,11 +45,23 @@ class CharacterModel extends Model
     protected $afterDelete    = [];
 
     public function getCharacterById($id) {
-        return $this->find($id);
+        return $this->select("characters.id AS char_id, user.id AS user_id, user.username, characters.name, characters.strength, characters.constitution, characters.agility, characters.experience, characters.level")
+            ->join("user", "user.id = characters.user_id")
+            ->where("characters.id", $id)
+            ->find();
+    }
+
+    public function getCharacterByUserId($user_id) {
+        return $this->select("characters.id AS char_id, user.id AS user_id, user.username, characters.name, characters.strength, characters.constitution, characters.agility, characters.experience, characters.level")
+            ->join("user", "user.id = characters.user_id")
+            ->where("user_id", $user_id)
+            ->find();
     }
 
     public function getAllCharacters() {
-        return $this->findAll();
+        return $this->select("characters.id AS char_id, user.id AS user_id, user.username, characters.name, characters.strength, characters.constitution, characters.agility, characters.experience, characters.level")
+            ->join("user", "user.id = characters.user_id")
+            ->find();
     }
 
     public function insertCharacter($data) {
@@ -62,5 +74,55 @@ class CharacterModel extends Model
 
     public function deleteCharacter($id) {
         return $this->delete($id);
+    }
+
+    public function getPaginatedCharacter($start, $length, $searchValue, $orderColumnName, $orderDirection)
+    {
+        $builder = $this->builder();
+        $builder->join('user', 'user.id = characters.user_id');
+        $builder->select('characters.id AS id, user.username AS username, characters.name, characters.strength, characters.constitution, characters.agility, characters.experience, characters.level');
+
+        // Recherche
+        if ($searchValue != null) {
+            $builder->groupStart()
+                ->like('user.username', $searchValue)
+                ->orLike('characters.name', $searchValue)
+                ->orLike('characters.level', $searchValue)
+                ->groupEnd();
+        }
+
+        // Tri
+        if ($orderColumnName && $orderDirection) {
+            $builder->orderBy($orderColumnName, $orderDirection);
+        }
+
+        $builder->limit($length, $start);
+
+        return $builder->get()->getResultArray();
+    }
+
+    public function getTotalCharacter()
+    {
+        $builder = $this->builder();
+        $builder->join('user', 'user.id = characters.user_id');
+        return $builder->countAllResults();
+    }
+
+    public function getFilteredCharacter($searchValue)
+    {
+        $builder = $this->builder();
+        $builder->join('user ', 'user.id = characters.user_id');
+        $builder->select('characters.id, user.username, characters.name, characters.strength, characters.constitution, characters.agility, characters.experience, characters.level');
+
+        // @phpstan-ignore-next-line
+        if ($searchValue != null) {
+            $builder->groupStart()
+                ->like('user.username', $searchValue)
+                ->orLike('characters.name', $searchValue)
+                ->orLike('characters.level', $searchValue)
+                ->groupEnd();
+        }
+
+        return $builder->countAllResults();
     }
 }

@@ -7,3 +7,12 @@
       <h1> Bienvenue, <?= isset($user)? $user->username: 'invité'; ?> ! </h1>
     </div>
 </div>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+        </div>
+        <div class="col-4">
+
+        </div>
+    </div>
+</div>

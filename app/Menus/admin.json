@@ -14,21 +14,21 @@
     "subs": {
       "characters": {
         "title": "Characters",
-        "url": "/characters",
+        "url": "/admin/characters",
         "perm": "none",
         "icon": "<i class=\"nav-icon fas fa-user-ninja\"></i>",
         "class": ""
       },
       "battles": {
         "title": "Battles",
-        "url": "/battles",
+        "url": "/admin/battles",
         "perm": "none",
         "icon": "<i class=\"nav-icon fas fa-hand-fist\"></i>",
         "class": ""
       },
       "battle_history": {
         "title": "Battle history",
-        "url": "/battlehistory",
+        "url": "/admin/battlehistory",
         "perm": "none",
         "icon": "<i class=\"nav-icon fas fa-hourglass-half\"></i>",
         "class": ""
