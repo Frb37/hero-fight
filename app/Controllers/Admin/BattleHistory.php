@@ -4,17 +4,17 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 
-class Battles extends BaseController
+class BattleHistory extends BaseController
 {
-    public function getindex() {
-        $bm = Model("BattlesModel");
-        $battles = $bm->getAllBattles();
-        return $this->view('/admin/battles/index', ['battles' => $battles], true);
+    public function getindex($id_user = null) {
+        $bhm = Model("BattleHistoryModel");
+        $battle_history = $bhm->getAllBattleHistory();
+        return $this->view('/admin/battles/index', ['battle_history' => $battle_history], true);
     }
 
-    public function postSearchBattles()
+    public function postSearchBattleHistory()
     {
-        $CharacterModel = model('App\Models\BattlesModel');
+        $CharacterModel = model('App\Models\BattleHistoryModel');
 
         // Paramètres de pagination et de recherche envoyés par DataTables
         $draw        = $this->request->getPost('draw');
@@ -29,13 +29,13 @@ class Battles extends BaseController
 
 
         // Obtenez les données triées et filtrées
-        $data = $CharacterModel->getPaginatedBattles($start, $length, $searchValue, $orderColumnName, $orderDirection);
+        $data = $CharacterModel->getPaginatedBattleHistory($start, $length, $searchValue, $orderColumnName, $orderDirection);
 
         // Obtenez le nombre total de lignes sans filtre
-        $totalRecords = $CharacterModel->getTotalBattles();
+        $totalRecords = $CharacterModel->getTotalBattleHistory();
 
         // Obtenez le nombre total de lignes filtrées pour la recherche
-        $filteredRecords = $CharacterModel->getFilteredBattles($searchValue);
+        $filteredRecords = $CharacterModel->getFilteredBattleHistory($searchValue);
 
         $result = [
             'draw'            => $draw,
