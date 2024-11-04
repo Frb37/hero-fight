@@ -27,7 +27,11 @@ class Login extends BaseController
                 return view('/login/login');
             }
             $this->session->set('user', $user);
-            return $this->redirect('/');
+            if ($user->id_permission == '1') {
+                return $this->redirect('/admin/dashboard');
+            } else {
+                return $this->redirect('/');
+            }
         } else {
             // Gérer l'échec de l'authentification
             return view('/login/login');
